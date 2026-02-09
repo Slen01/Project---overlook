@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overlook C2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background: #111; color: #0f0; font-family: 'Courier New', monospace; }
+        .suspicious { color: #ff0000; font-weight: bold; }
+        .table { color: #0f0; }
+    </style>
+</head>
+<body class="container mt-5">
+    <h1>OVERLOOK DASHBOARD</h1>
+    {% for name, data in agents.items() %}
+    <div class="card bg-dark border-success mt-4">
+        <div class="card-header border-success">Agent: {{ name }}</div>
+        <div class="card-body">
+            <table class="table table-dark table-sm">
+                <thead><tr><th>PID</th><th>Name</th><th>User</th><th>Action</th></tr></thead>
+                <tbody>
+                    {% for p in data.processes %}
+                    <tr class="{{ 'suspicious' if p.name in ['cmd.exe', 'powershell.exe', 'python.exe'] else '' }}">
+                        <td>{{ p.pid }}</td>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.username }}</td>
+                        <td><button onclick="kill('{{ name }}', {{ p.pid }})" class="btn btn-danger btn-sm">KILL</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+    <script>
+        function kill(id, pid) {
+            fetch(`/api/kill/${id}/${pid}`, {method:'POST'}).then(() => alert("Command Queued"));
+        }
+        setInterval(() => location.reload(), 10000);
+    </script>
+</body>
+</html>
