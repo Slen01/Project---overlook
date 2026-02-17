@@ -1,6 +1,6 @@
 # Project Overlook: Remote Security Orchestrator (C2)
 
-**Project Overlook** is a 3rd-year Cybersecurity project featuring a custom Command and Control (C2) architecture. It allows for remote system monitoring and active threat response via a web-based dashboard.
+**Project Overlook** is a project featuring a custom Command and Control (C2) architecture. It allows for remote system monitoring and active threat response via a web-based dashboard.
 
 ## 🚀 Key Features
 * **Live Process Monitor:** Real-time data exfiltration of running processes from the target agent.
